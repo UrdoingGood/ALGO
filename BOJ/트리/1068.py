@@ -54,4 +54,10 @@ def count_bfs(root):
     return count
 
 
+# 루트 노트가 없는 경우 따로 처리
+# 루트 노트가 없으면, 트리가 안 되므로!
+if root == -1 or len(tree) == 0:
+    print(0)
+    exit()
+
 print(count_bfs(root))
