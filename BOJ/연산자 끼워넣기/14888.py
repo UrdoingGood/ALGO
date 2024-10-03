@@ -1,35 +1,32 @@
 import sys
 sys.stdin = open('input.txt', 'r')
 
-def dfs(n, sm, add, sub, mul, div):
+def dfs(n, total, add, sub, mul, div):
     global mn, mx
 
     if n == N:
-        mn = min(sm, mn)
-        mx = max(sm, mx)
-        return
-
-    if sm < int(-1e8) or sm > int(1e8):
+        mn = min(total, mn)
+        mx = max(total, mx)
         return
 
     if add > 0:
-        dfs(n+1, sm+A[n], add-1, sub, mul, div)
+        dfs(n+1, total+A[n], add-1, sub, mul, div)
     if sub > 0:
-        dfs(n+1, sm-A[n], add, sub-1, mul, div)
+        dfs(n+1, total-A[n], add, sub-1, mul, div)
     if mul > 0:
-        dfs(n+1, sm*A[n], add, sub, mul-1, div)
+        dfs(n+1, total*A[n], add, sub, mul-1, div)
     if div > 0:
-        if sm < 0:
-            dfs(n + 1, -(abs(sm)//A[n]), add, sub, mul, div - 1)
+        if total < 0:
+            dfs(n + 1, -(-total // A[n]), add, sub, mul, div - 1)
         else:
-            dfs(n + 1, int(sm//A[n]), add, sub, mul, div - 1)
+            dfs(n + 1, total // A[n], add, sub, mul, div - 1)
 
 N = int(input())
 A = list(map(int, input().split(' ')))
 add, sub, mul, div = map(int, input().split(' '))
-mn = int(1e8)
-mx = int(-1e8)
+mn = int(1e9)
+mx = int(-1e9)
 
-dfs(1, 3, add, sub, mul, div)
+dfs(1, A[0], add, sub, mul, div)
 print(mx)
 print(mn)
